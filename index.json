@@ -1,1 +1,315 @@
-{ "extensions": [] }
+{
+  "extensions": [
+    {
+      "manifest": {
+        "id": "agent-inboxes",
+        "title": "Agent inboxes",
+        "description": "Give agents throwaway email addresses for sign-ups and verification codes. Needs you signed in to Odyn.",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 4,
+        "permissions": [
+          "agent:tools"
+        ],
+        "commands": [],
+        "agent": {
+          "summary": "make receive-only email addresses and read the emails that arrive, for sign-ups and verification codes"
+        }
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/agent-inboxes-v1.0.0/agent-inboxes-v1.0.0.tar.gz",
+      "size": 435,
+      "sha256": "7bfcfdfd6875433816226c28ce38c0ab8d6574a088bb5bdd2ec75590de156d94"
+    },
+    {
+      "manifest": {
+        "id": "computer-use",
+        "title": "Computer use",
+        "description": "Let agents see and control your Mac's apps when you ask them to with /odyn-computer.",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 4,
+        "platforms": [
+          "darwin"
+        ],
+        "permissions": [
+          "agent:tools"
+        ],
+        "commands": [],
+        "agent": {
+          "skill": "odyn-computer",
+          "skillFolder": "skill",
+          "summary": "see and control the user's Mac apps with the peekaboo command, only when the user types /odyn-computer",
+          "accessLabel": "control your Mac"
+        }
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/computer-use-v1.0.0/computer-use-v1.0.0.tar.gz",
+      "size": 3900,
+      "sha256": "330831e18bc937329bb14d81c6061f36e4eb6a0fb7c91c4541128cacfd9dc2e0"
+    },
+    {
+      "manifest": {
+        "id": "design-skills",
+        "title": "Design and dev skills",
+        "description": "Gives agents Odyn's design skills (flow, wireframe, hi-fi, review) and dev skills (scope, plan, build).",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 4,
+        "permissions": [
+          "agent:tools"
+        ],
+        "commands": [],
+        "preferences": [
+          {
+            "name": "onlyWhenAsked",
+            "title": "Only run when I name them (for example /odyn-hifi)",
+            "type": "checkbox"
+          }
+        ],
+        "agent": {
+          "summary": "design a flow, wireframe or hi-fi screen, review work, and scope, plan and build features"
+        }
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/design-skills-v1.0.0/design-skills-v1.0.0.tar.gz",
+      "size": 522,
+      "sha256": "d01dc825a1671361466b80e859493db82bac9a623dd91e9125b28550f5ef45eb"
+    },
+    {
+      "manifest": {
+        "id": "fast-browser",
+        "title": "Fast browser goals",
+        "description": "Let agents hand a whole browser goal (\"sign in and open settings\") to Jev in one step, instead of clicking through it. Needs a Jev API key.",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 4,
+        "permissions": [
+          "agent:tools"
+        ],
+        "commands": [],
+        "preferences": [
+          {
+            "name": "apiKey",
+            "title": "Jev API key",
+            "type": "password",
+            "required": true
+          },
+          {
+            "name": "textModel",
+            "title": "Model for typing into fields (optional, e.g. claude-haiku-4-5; empty uses the chat's model)",
+            "type": "text"
+          }
+        ],
+        "agent": {
+          "summary": "hand a whole browser goal to Jev in one step, in chats where the user asked for the browser"
+        }
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/fast-browser-v1.0.0/fast-browser-v1.0.0.tar.gz",
+      "size": 592,
+      "sha256": "e1777e6152d391f4e5dd008442523290d86bd1abf7b4bbf3ee8a3e04caed6269"
+    },
+    {
+      "manifest": {
+        "id": "message-outline",
+        "title": "Message outline",
+        "description": "Show a slim column of ticks beside a chat, one per message you sent. Hover a tick to see the message; click it to jump there.",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 4,
+        "permissions": [],
+        "commands": []
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/message-outline-v1.0.0/message-outline-v1.0.0.tar.gz",
+      "size": 387,
+      "sha256": "d79fb0a0f4ff00a252a16c41595985714f53945b45d67f930a7fbb79646b4cb6"
+    },
+    {
+      "manifest": {
+        "id": "phones",
+        "title": "Phones",
+        "description": "Let agents run iPhone simulators and Android emulators that you watch live in the sidebar.",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 3,
+        "platforms": [
+          "darwin"
+        ],
+        "permissions": [
+          "programs:run",
+          "agent:tools"
+        ],
+        "commands": [],
+        "surfaces": [
+          {
+            "id": "setup",
+            "title": "Phone setup",
+            "placement": "settings",
+            "entry": "dist/panel/index.html",
+            "height": 300
+          }
+        ],
+        "helper": {
+          "entry": "dist/helper.js",
+          "programs": [
+            {
+              "name": "xcrun",
+              "locations": [
+                "/usr/bin/xcrun"
+              ]
+            },
+            {
+              "name": "axe",
+              "locations": [
+                "$DATA/axe/1.8.0/axe",
+                "$USER_DATA/tools/axe/1.8.0/axe",
+                "/opt/homebrew/bin/axe",
+                "/usr/local/bin/axe",
+                "axe"
+              ],
+              "exposeToAgent": true
+            },
+            {
+              "name": "adb",
+              "locations": [
+                "$ANDROID_HOME/platform-tools/adb",
+                "$ANDROID_SDK_ROOT/platform-tools/adb",
+                "~/Library/Android/sdk/platform-tools/adb",
+                "/opt/homebrew/share/android-commandlinetools/platform-tools/adb"
+              ]
+            },
+            {
+              "name": "emulator",
+              "locations": [
+                "$ANDROID_HOME/emulator/emulator",
+                "$ANDROID_SDK_ROOT/emulator/emulator",
+                "~/Library/Android/sdk/emulator/emulator",
+                "/opt/homebrew/share/android-commandlinetools/emulator/emulator"
+              ]
+            },
+            {
+              "name": "sdkmanager",
+              "locations": [
+                "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager",
+                "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager",
+                "~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager",
+                "/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin/sdkmanager",
+                "/opt/homebrew/bin/sdkmanager",
+                "/usr/local/bin/sdkmanager"
+              ]
+            },
+            {
+              "name": "avdmanager",
+              "locations": [
+                "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager",
+                "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/avdmanager",
+                "~/Library/Android/sdk/cmdline-tools/latest/bin/avdmanager",
+                "/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin/avdmanager",
+                "/opt/homebrew/bin/avdmanager",
+                "/usr/local/bin/avdmanager"
+              ]
+            },
+            {
+              "name": "brew",
+              "locations": [
+                "/opt/homebrew/bin/brew",
+                "/usr/local/bin/brew"
+              ]
+            },
+            {
+              "name": "java_home",
+              "locations": [
+                "/usr/libexec/java_home"
+              ]
+            },
+            {
+              "name": "tar",
+              "locations": [
+                "/usr/bin/tar"
+              ]
+            },
+            {
+              "name": "chmod",
+              "locations": [
+                "/bin/chmod"
+              ]
+            },
+            {
+              "name": "uname",
+              "locations": [
+                "/usr/bin/uname"
+              ]
+            }
+          ],
+          "folders": [
+            {
+              "name": "android-sdk",
+              "locations": [
+                "$ANDROID_HOME",
+                "$ANDROID_SDK_ROOT",
+                "~/Library/Android/sdk",
+                "/opt/homebrew/share/android-commandlinetools"
+              ]
+            }
+          ],
+          "links": [
+            "macappstore://apps.apple.com/app/id497799835"
+          ],
+          "downloadHosts": [
+            "github.com",
+            "githubusercontent.com"
+          ]
+        },
+        "agent": {
+          "skill": "odyn-phone",
+          "skillFolder": "skill",
+          "summary": "run iPhone simulators and Android emulators that the user watches live in Odyn's sidebar",
+          "accessLabel": "use a phone",
+          "gatedCommands": [
+            {
+              "program": "xcrun",
+              "subcommand": "simctl"
+            },
+            {
+              "program": "axe"
+            },
+            {
+              "program": "adb"
+            },
+            {
+              "program": "emulator"
+            }
+          ]
+        }
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/phones-v1.0.0/phones-v1.0.0.tar.gz",
+      "size": 320746,
+      "sha256": "335225f116049d491d866e78fcdc16ab941f6f709ac21d4ce3ee16d2049daff5"
+    },
+    {
+      "manifest": {
+        "id": "scratchpad",
+        "title": "Scratchpad",
+        "description": "Sketch an idea above the message box and attach it to your message.",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 2,
+        "permissions": [
+          "composer:attach",
+          "screenshots:read"
+        ],
+        "commands": [],
+        "surfaces": [
+          {
+            "id": "canvas",
+            "title": "Scratchpad",
+            "placement": "composer",
+            "entry": "dist/panel/index.html",
+            "icon": "pencil",
+            "height": 260
+          }
+        ]
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/scratchpad-v1.0.0/scratchpad-v1.0.0.tar.gz",
+      "size": 3317360,
+      "sha256": "5fff60a5b0b0fb5cd0ba1aef171a96fd422bc450884e95fbf6b787ae3903114b"
+    }
+  ]
+}
