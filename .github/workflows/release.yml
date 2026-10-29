@@ -1,0 +1,39 @@
+# After a merge to main: releases every extension whose version went up, then
+# commits the updated index.json (the list Odyn reads).
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "extensions/**"
+      - "scripts/**"
+      - "package.json"
+      - "bun.lock"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: node scripts/release.mjs --publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Commit the updated list
+        run: |
+          if git diff --quiet -- index.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git commit -m "Update index.json"
+          git push

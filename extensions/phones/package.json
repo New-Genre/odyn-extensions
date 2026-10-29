@@ -1,0 +1,169 @@
+{
+  "name": "odyn-extension-phones",
+  "version": "1.0.0",
+  "private": true,
+  "odyn": {
+    "id": "phones",
+    "title": "Phones",
+    "description": "Let agents run iPhone simulators and Android emulators that you watch live in the sidebar.",
+    "author": "Odyn",
+    "version": "1.0.0",
+    "apiVersion": 3,
+    "platforms": [
+      "darwin"
+    ],
+    "permissions": [
+      "programs:run",
+      "agent:tools"
+    ],
+    "commands": [],
+    "surfaces": [
+      {
+        "id": "setup",
+        "title": "Phone setup",
+        "placement": "settings",
+        "entry": "dist/panel/index.html",
+        "height": 300
+      }
+    ],
+    "helper": {
+      "entry": "dist/helper.js",
+      "programs": [
+        {
+          "name": "xcrun",
+          "locations": [
+            "/usr/bin/xcrun"
+          ]
+        },
+        {
+          "name": "axe",
+          "locations": [
+            "$DATA/axe/1.8.0/axe",
+            "$USER_DATA/tools/axe/1.8.0/axe",
+            "/opt/homebrew/bin/axe",
+            "/usr/local/bin/axe",
+            "axe"
+          ],
+          "exposeToAgent": true
+        },
+        {
+          "name": "adb",
+          "locations": [
+            "$ANDROID_HOME/platform-tools/adb",
+            "$ANDROID_SDK_ROOT/platform-tools/adb",
+            "~/Library/Android/sdk/platform-tools/adb",
+            "/opt/homebrew/share/android-commandlinetools/platform-tools/adb"
+          ]
+        },
+        {
+          "name": "emulator",
+          "locations": [
+            "$ANDROID_HOME/emulator/emulator",
+            "$ANDROID_SDK_ROOT/emulator/emulator",
+            "~/Library/Android/sdk/emulator/emulator",
+            "/opt/homebrew/share/android-commandlinetools/emulator/emulator"
+          ]
+        },
+        {
+          "name": "sdkmanager",
+          "locations": [
+            "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager",
+            "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager",
+            "~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager",
+            "/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin/sdkmanager",
+            "/opt/homebrew/bin/sdkmanager",
+            "/usr/local/bin/sdkmanager"
+          ]
+        },
+        {
+          "name": "avdmanager",
+          "locations": [
+            "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager",
+            "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/avdmanager",
+            "~/Library/Android/sdk/cmdline-tools/latest/bin/avdmanager",
+            "/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin/avdmanager",
+            "/opt/homebrew/bin/avdmanager",
+            "/usr/local/bin/avdmanager"
+          ]
+        },
+        {
+          "name": "brew",
+          "locations": [
+            "/opt/homebrew/bin/brew",
+            "/usr/local/bin/brew"
+          ]
+        },
+        {
+          "name": "java_home",
+          "locations": [
+            "/usr/libexec/java_home"
+          ]
+        },
+        {
+          "name": "tar",
+          "locations": [
+            "/usr/bin/tar"
+          ]
+        },
+        {
+          "name": "chmod",
+          "locations": [
+            "/bin/chmod"
+          ]
+        },
+        {
+          "name": "uname",
+          "locations": [
+            "/usr/bin/uname"
+          ]
+        }
+      ],
+      "folders": [
+        {
+          "name": "android-sdk",
+          "locations": [
+            "$ANDROID_HOME",
+            "$ANDROID_SDK_ROOT",
+            "~/Library/Android/sdk",
+            "/opt/homebrew/share/android-commandlinetools"
+          ]
+        }
+      ],
+      "links": [
+        "macappstore://apps.apple.com/app/id497799835"
+      ],
+      "downloadHosts": [
+        "github.com",
+        "githubusercontent.com"
+      ]
+    },
+    "agent": {
+      "skill": "odyn-phone",
+      "skillFolder": "skill",
+      "summary": "run iPhone simulators and Android emulators that the user watches live in Odyn's sidebar",
+      "accessLabel": "use a phone",
+      "gatedCommands": [
+        {
+          "program": "xcrun",
+          "subcommand": "simctl"
+        },
+        {
+          "program": "axe"
+        },
+        {
+          "program": "adb"
+        },
+        {
+          "program": "emulator"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@odyn-app/api": "^0.1.0",
+    "nucleo-ui-essential-outline-18": "^1.1.8",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}

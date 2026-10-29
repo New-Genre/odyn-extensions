@@ -1,0 +1,22 @@
+{
+  "name": "odyn-extension-computer-use",
+  "version": "1.0.0",
+  "private": true,
+  "odyn": {
+    "id": "computer-use",
+    "title": "Computer use",
+    "description": "Let agents see and control your Mac's apps when you ask them to with /odyn-computer.",
+    "author": "Odyn",
+    "version": "1.0.0",
+    "apiVersion": 4,
+    "platforms": ["darwin"],
+    "permissions": ["agent:tools"],
+    "commands": [],
+    "agent": {
+      "skill": "odyn-computer",
+      "skillFolder": "skill",
+      "summary": "see and control the user's Mac apps with the peekaboo command, only when the user types /odyn-computer",
+      "accessLabel": "control your Mac"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+/* Odyn's public look, so the Scratchpad page matches the rest of the app. */
+@import "@odyn-app/api/theme.css";
+
+html,
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+/* Hide the drawing library's own menus and controls; the Scratchpad has its own toolbar. */
+.scratchpad-surface .App-bottom-bar,
+.scratchpad-surface .undo-redo-buttons,
+.scratchpad-surface .zoom-actions,
+.scratchpad-surface .help-icon,
+.scratchpad-surface .layer-ui__wrapper__footer,
+.scratchpad-surface .footer-center,
+.scratchpad-surface .scroll-back-to-content,
+.scratchpad-surface .HintViewer {
+  display: none !important;
+}
+.scratchpad-surface .excalidraw,
+.scratchpad-surface .excalidraw .layer-ui__wrapper {
+  background: transparent !important;
+}
+
+@layer base {
+  .excalidraw .main-menu-trigger,
+  .excalidraw .default-sidebar-trigger,
+  .excalidraw .layer-ui__wrapper__footer-right,
+  .excalidraw .App-toolbar-container,
+  .excalidraw .App-menu_top > *:nth-child(3),
+  .excalidraw .App-menu_bottom {
+    display: none !important;
+  }
+  .excalidraw,
+  .excalidraw.theme--dark {
+    --island-bg-color: var(--sidebar) !important;
+    --color-surface-low: var(--sidebar) !important;
+  }
+  /* Excalidraw owns the canvas interaction model, but its context menu is a
+     visible product surface. Map it onto Odyn's popover system so scratchpads
+     and project canvases inherit the active theme instead of Excalidraw's
+     default utility-menu styling. */
+  .excalidraw .context-menu {
+    overflow: hidden !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    background-color: var(--popover) !important;
+    box-shadow: 0 10px 24px rgb(0 0 0 / 12%) !important;
+    color: var(--popover-foreground) !important;
+    font-family: var(--font-sans) !important;
+    padding: 0.25rem !important;
+  }
+  .excalidraw .context-menu-item {
+    min-width: 12rem !important;
+    border-radius: calc(var(--radius) - 0.1875rem) !important;
+    color: var(--popover-foreground) !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.125rem !important;
+    padding: 0.4375rem 0.5rem !important;
+  }
+  .excalidraw .context-menu-item .context-menu-item__shortcut {
+    color: var(--muted-foreground) !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.6875rem !important;
+  }
+  .excalidraw .context-menu-item:hover,
+  .excalidraw .context-menu-item:focus-visible {
+    background-color: var(--accent) !important;
+    color: var(--accent-foreground) !important;
+  }
+  .excalidraw .context-menu-item-separator {
+    border-color: var(--border) !important;
+    margin: 0.25rem 0 !important;
+  }
+}

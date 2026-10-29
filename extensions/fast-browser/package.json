@@ -1,0 +1,33 @@
+{
+  "name": "odyn-extension-fast-browser",
+  "version": "1.0.0",
+  "private": true,
+  "odyn": {
+    "id": "fast-browser",
+    "title": "Fast browser goals",
+    "description": "Let agents hand a whole browser goal (\"sign in and open settings\") to Jev in one step, instead of clicking through it. Needs a Jev API key.",
+    "author": "Odyn",
+    "version": "1.0.0",
+    "apiVersion": 4,
+    "permissions": [
+      "agent:tools"
+    ],
+    "commands": [],
+    "preferences": [
+      {
+        "name": "apiKey",
+        "title": "Jev API key",
+        "type": "password",
+        "required": true
+      },
+      {
+        "name": "textModel",
+        "title": "Model for typing into fields (optional, e.g. claude-haiku-4-5; empty uses the chat's model)",
+        "type": "text"
+      }
+    ],
+    "agent": {
+      "summary": "hand a whole browser goal to Jev in one step, in chats where the user asked for the browser"
+    }
+  }
+}

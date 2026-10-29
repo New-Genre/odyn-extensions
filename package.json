@@ -1,0 +1,23 @@
+{
+  "name": "odyn-extensions",
+  "private": true,
+  "type": "module",
+  "workspaces": ["extensions/*"],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test extensions",
+    "release": "node scripts/release.mjs"
+  },
+  "devDependencies": {
+    "@odyn-app/api": "^0.1.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/bun": "latest",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5"
+  }
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Odyn Computer"
+  short_description: "See and control your Mac only when explicitly invoked"
+  default_prompt: "Use $odyn-computer to check how this looks in the native app."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,36 @@
+{
+  "name": "odyn-extension-scratchpad",
+  "version": "1.0.0",
+  "private": true,
+  "odyn": {
+    "id": "scratchpad",
+    "title": "Scratchpad",
+    "description": "Sketch an idea above the message box and attach it to your message.",
+    "author": "Odyn",
+    "version": "1.0.0",
+    "apiVersion": 2,
+    "permissions": [
+      "composer:attach",
+      "screenshots:read"
+    ],
+    "commands": [],
+    "surfaces": [
+      {
+        "id": "canvas",
+        "title": "Scratchpad",
+        "placement": "composer",
+        "entry": "dist/panel/index.html",
+        "icon": "pencil",
+        "height": 260
+      }
+    ]
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.1",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@odyn-app/api": "^0.1.0",
+    "nucleo-ui-essential-outline-18": "^1.1.8",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}

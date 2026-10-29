@@ -1,0 +1,7 @@
+/* Odyn's public look, so the setup page matches the rest of the app. */
+@import "@odyn-app/api/theme.css";
+
+html,
+body {
+  background: transparent;
+}
