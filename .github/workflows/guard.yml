@@ -44,9 +44,12 @@ jobs:
         run: gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --jq '.[] | [.status, .filename, (.previous_filename // "")] | @tsv' > changed.tsv
       - name: Check
         env:
+          GH_TOKEN: ${{ github.token }}
           AUTHOR: ${{ github.event.pull_request.user.login }}
-          ASSOCIATION: ${{ github.event.pull_request.author_association }}
-        run: node base/scripts/guard.mjs --base base --pr pr --changed changed.tsv --author "$AUTHOR" --association "$ASSOCIATION" --report report.md
+        run: |
+          # The author's role on this repo (write or above counts as Odyn's team).
+          permission=$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$AUTHOR/permission" --jq .permission 2>/dev/null || echo none)
+          node base/scripts/guard.mjs --base base --pr pr --changed changed.tsv --author "$AUTHOR" --permission "$permission" --report report.md
       - name: Post the report
         if: always() && hashFiles('report.md') != ''
         env:

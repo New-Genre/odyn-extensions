@@ -5,7 +5,7 @@
  * off, and it only READS the pull request's files — nothing from them is run.
  *
  *   node scripts/guard.mjs --base <main checkout> --pr <pull request checkout>
- *     --changed <changed.tsv> --author <login> --association <OWNER|MEMBER|…>
+ *     --changed <changed.tsv> --author <login> --permission <admin|write|read|none>
  *     --report <report.md>
  *
  * It fails the pull request when:
@@ -19,10 +19,11 @@
  */
 import { execFileSync } from 'node:child_process'
 import { existsSync, lstatSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { extname, join, relative } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { extname, join, relative, resolve } from 'node:path'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
-const MAINTAINER_ASSOCIATIONS = new Set(['OWNER', 'MEMBER', 'COLLABORATOR'])
+/** GitHub repo roles that count as Odyn's team. */
+const MAINTAINER_PERMISSIONS = new Set(['admin', 'maintain', 'write'])
 const EXTENSION_PATH = /^extensions\/([a-z0-9]+(?:-[a-z0-9]+)*)\//
 const SOURCE_EXTENSIONS = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.html', '.css'])
 const ASSET_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.svg', '.woff', '.woff2'])
@@ -242,9 +243,10 @@ function args() {
 }
 
 async function main() {
-  const { base, pr, changed: changedFile, author = '', association = '', report = 'report.md' } = args()
-  const { isOdynExtensionId } = await import(join(base, 'node_modules', '@odyn-app', 'api', 'dist', 'index.js'))
-  const maintainer = MAINTAINER_ASSOCIATIONS.has(association)
+  const { base, pr, changed: changedFile, author = '', permission = 'none', report = 'report.md' } = args()
+  const kit = pathToFileURL(resolve(base, 'node_modules', '@odyn-app', 'api', 'dist', 'index.js')).href
+  const { isOdynExtensionId } = await import(kit)
+  const maintainer = MAINTAINER_PERMISSIONS.has(permission)
   const changed = readFileSync(changedFile, 'utf8').split('\n').filter(Boolean).map((line) => {
     const [status, filename, previous] = line.split('\t')
     return { status, filename, previous: previous || null }
