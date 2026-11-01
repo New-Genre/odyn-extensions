@@ -1,5 +1,7 @@
 # Making an extension
 
+This is the step-by-step. For what extensions can and can't do, every permission, limit and manifest field, read the [extension docs](https://www.odyn.build/docs/extensions).
+
 ## 1. Create a folder
 
 Add `extensions/<your-id>/` with a `package.json`. The folder name must match `odyn.id`.
@@ -17,10 +19,16 @@ Add `extensions/<your-id>/` with a `package.json`. The folder name must match `o
     "title": "Standup notes",
     "description": "Turns today's chats into a standup.",
     "author": "Your name",
-    "apiVersion": 1,
-    "permissions": ["chats:read"],
+    "apiVersion": 4,
+    "permissions": ["chats:read", "agent:tools"],
+    "agent": { "summary": "Writes a standup from today's chats." },
     "commands": [
-      { "name": "show-standup", "title": "Show standup", "placement": "sidebarPanel" }
+      {
+        "name": "write-standup",
+        "title": "Write standup",
+        "placement": "agentTool",
+        "description": "Lists the chats worked on today."
+      }
     ]
   }
 }
@@ -43,9 +51,9 @@ import { defineExtension } from '@odyn-app/api'
 
 defineExtension({
   commands: {
-    'show-standup': async ({ odyn }) => {
+    'write-standup': async ({ odyn }) => {
       const chats = await odyn.chats.list()
-      return { type: 'detail', markdown: chats.map((chat) => `- ${chat.title}`).join('\n') }
+      return chats.map((chat) => `- ${chat.title}`).join('\n')
     },
   },
 })

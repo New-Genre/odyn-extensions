@@ -11,7 +11,7 @@ Every extension in Odyn's Marketplace lives here: the ones made by Odyn and the 
 
 ## Make an extension
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+The [extension docs](https://www.odyn.build/docs/extensions) cover what extensions can and can't do, every permission and limit, and the full reference. [CONTRIBUTING.md](CONTRIBUTING.md) is the step-by-step for adding one here.
 
 ## Commands
 
