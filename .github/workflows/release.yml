@@ -30,16 +30,16 @@ jobs:
           # allowed to save the updated list and owners file straight to it.
           ssh-key: ${{ secrets.RELEASE_DEPLOY_KEY }}
       - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
+      - run: bun install --ignore-scripts
       - run: node scripts/release.mjs --publish
         env:
           GH_TOKEN: ${{ github.token }}
       - run: node scripts/owners.mjs
-      - name: Commit the updated list and owners
+      - name: Commit the updated list, owners and lockfile
         run: |
-          if git diff --quiet -- index.json .github/CODEOWNERS; then exit 0; fi
+          if git diff --quiet -- index.json .github/CODEOWNERS bun.lock; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add index.json .github/CODEOWNERS
-          git commit -m "Update index.json and owners"
+          git add index.json .github/CODEOWNERS bun.lock
+          git commit -m "Update index.json, owners and lockfile"
           git push

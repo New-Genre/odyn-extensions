@@ -90,6 +90,18 @@ The first time, this opens GitHub so you can sign in. It then copies your extens
 
 Once it's reviewed and merged, your extension is released and appears in Odyn's Marketplace.
 
+## What the checks look for
+
+Every pull request is checked automatically before anyone reviews it. It fails if:
+
+- it changes anything outside one `extensions/<id>/` folder (Odyn's team excepted);
+- the extension contains compiled programs, archives, binary files, links, `node_modules` or built output — the release builds it from your source;
+- the code is minified or squashed onto very long lines, uses `eval` or `new Function`, or loads code from the internet;
+- `package.json` runs scripts on install, or a dependency does, or a dependency comes from anywhere but npm;
+- someone who doesn't own an extension changes who owns it.
+
+It also comments a summary of what changed — new permissions, websites, packages — so the review is quick. CodeRabbit adds an AI review too.
+
 ## Updating it later
 
 Raise `version` in your `package.json`, then `bun run publish` again — it updates your open pull request, or opens a new one. Changes to an extension are reviewed by its owners and by Odyn.

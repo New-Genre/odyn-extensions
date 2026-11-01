@@ -2,11 +2,13 @@
   "name": "odyn-extensions",
   "private": true,
   "type": "module",
-  "workspaces": ["extensions/*"],
+  "workspaces": [
+    "extensions/*"
+  ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "bun test extensions",
+    "test": "bun test extensions scripts",
     "release": "node scripts/release.mjs"
   },
   "devDependencies": {

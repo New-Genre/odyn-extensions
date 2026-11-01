@@ -1,0 +1,28 @@
+# CodeRabbit (free for public repos) reviews every pull request alongside the
+# Guard check. It only comments; Odyn and the extension's owners decide.
+language: en-GB
+reviews:
+  profile: assertive
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "extensions/**"
+      instructions: |
+        Every extension merged here is downloaded by Odyn users and runs in their app, so review it as untrusted code.
+        Flag anything that:
+        - sends chats, project names, screenshots, settings or other user data anywhere, especially via odyn.fetch to a host in allowedHosts;
+        - does more than the manifest's description says, or asks for permissions it doesn't use;
+        - hides what it does: encoded or obfuscated strings, code built at runtime, unusually dense code;
+        - adds a dependency that is new, little-used, misspelt like a popular package, or unnecessary;
+        - changes `odyn.owners`, permissions or allowedHosts without explaining why in the pull request.
+        Odyn's own extensions (agent-inboxes, computer-use, design-skills, fast-browser, message-outline, phones, scratchpad) may run Mac programs; no other extension may.
+    - path: ".github/**"
+      instructions: "Changes here affect how every extension is checked and released. Flag anything that weakens a check, exposes a secret, or runs pull-request code with write access."
+    - path: "scripts/**"
+      instructions: "These scripts build, check and release every extension. Flag anything that weakens a check or could publish files that weren't reviewed."
+chat:
+  auto_reply: true

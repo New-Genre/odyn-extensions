@@ -16,7 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile
+      # Not frozen: a new extension adds itself to the lockfile. Packages may
+      # not run scripts while installing.
+      - run: bun install --ignore-scripts
       - run: bun run typecheck
       - run: bun run test
       - run: bun run build

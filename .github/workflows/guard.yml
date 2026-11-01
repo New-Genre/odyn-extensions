@@ -1,0 +1,61 @@
+# The security check on every pull request (scripts/guard.mjs).
+#
+# pull_request_target runs THIS file and the check script as they are on main,
+# so a pull request can't change or switch the check off. The pull request's
+# files are checked out only to be read: nothing from them is installed or run.
+name: Guard
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: guard-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get main (trusted)
+        uses: actions/checkout@v4
+        with:
+          path: base
+          persist-credentials: false
+      - name: Get the pull request's files (read only)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: pr
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+      - name: Install main's tools
+        working-directory: base
+        run: bun install --ignore-scripts
+      - name: List changed files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --jq '.[] | [.status, .filename, (.previous_filename // "")] | @tsv' > changed.tsv
+      - name: Check
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          ASSOCIATION: ${{ github.event.pull_request.author_association }}
+        run: node base/scripts/guard.mjs --base base --pr pr --changed changed.tsv --author "$AUTHOR" --association "$ASSOCIATION" --report report.md
+      - name: Post the report
+        if: always() && hashFiles('report.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          existing=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- odyn-guard -->"))) | .id' | head -1)
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$existing" -F body=@report.md > /dev/null
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -F body=@report.md > /dev/null
+          fi
