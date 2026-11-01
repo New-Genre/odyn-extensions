@@ -27,3 +27,5 @@ bun run release          # dry run: shows what would be released
 ## Licence
 
 MIT. See [LICENSE](LICENSE).
+
+<!-- CodeRabbit scope test -->
