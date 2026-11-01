@@ -25,6 +25,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # main only accepts reviewed changes; this deploy key is the one thing
+          # allowed to save the updated list and owners file straight to it.
+          ssh-key: ${{ secrets.RELEASE_DEPLOY_KEY }}
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: node scripts/release.mjs --publish
