@@ -1,5 +1,6 @@
 # After a merge to main: releases every extension whose version went up, then
-# commits the updated index.json (the list Odyn reads).
+# commits the updated index.json (the list Odyn reads) and .github/CODEOWNERS
+# (who reviews changes to each extension, from its `odyn.owners`).
 name: Release
 
 on:
@@ -29,11 +30,12 @@ jobs:
       - run: node scripts/release.mjs --publish
         env:
           GH_TOKEN: ${{ github.token }}
-      - name: Commit the updated list
+      - run: node scripts/owners.mjs
+      - name: Commit the updated list and owners
         run: |
-          if git diff --quiet -- index.json; then exit 0; fi
+          if git diff --quiet -- index.json .github/CODEOWNERS; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add index.json
-          git commit -m "Update index.json"
+          git add index.json .github/CODEOWNERS
+          git commit -m "Update index.json and owners"
           git push
