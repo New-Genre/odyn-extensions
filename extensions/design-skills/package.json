@@ -9,13 +9,24 @@
     "author": "Odyn",
     "version": "1.0.0",
     "apiVersion": 4,
-    "permissions": ["agent:tools"],
+    "permissions": [
+      "agent:tools"
+    ],
     "commands": [],
     "preferences": [
-      { "name": "onlyWhenAsked", "title": "Only run when I name them (for example /odyn-hifi)", "type": "checkbox" }
+      {
+        "name": "onlyWhenAsked",
+        "title": "Only run when I name them (for example /odyn-hifi)",
+        "type": "checkbox"
+      }
     ],
     "agent": {
       "summary": "design a flow, wireframe or hi-fi screen, review work, and scope, plan and build features"
-    }
+    },
+    "screenshots": [
+      "screenshots/1.webp",
+      "screenshots/2.webp",
+      "screenshots/3.webp"
+    ]
   }
 }

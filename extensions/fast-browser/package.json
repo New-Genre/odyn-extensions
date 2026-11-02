@@ -28,6 +28,10 @@
     ],
     "agent": {
       "summary": "hand a whole browser goal to Jev in one step, in chats where the user asked for the browser"
-    }
+    },
+    "screenshots": [
+      "screenshots/1.webp",
+      "screenshots/2.webp"
+    ]
   }
 }

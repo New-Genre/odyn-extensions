@@ -10,6 +10,11 @@
     "version": "1.0.0",
     "apiVersion": 4,
     "permissions": [],
-    "commands": []
+    "commands": [],
+    "screenshots": [
+      "screenshots/1.webp",
+      "screenshots/2.webp",
+      "screenshots/3.webp"
+    ]
   }
 }

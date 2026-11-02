@@ -8,6 +8,7 @@ Every extension in Odyn's Marketplace lives here: the ones made by Odyn and the 
 - Extensions are built with [`@odyn-app/api`](https://www.npmjs.com/package/@odyn-app/api), Odyn's public building kit. It's the only part of Odyn an extension can use.
 - When a change is merged and an extension's `version` has gone up, a workflow builds it, attaches it to a GitHub release, and adds it to [`index.json`](index.json). That's the list Odyn reads.
 - Odyn checks each download's size and checksum (a fingerprint of the file) against `index.json` before unpacking it. Every extension runs sandboxed, and each call it makes is checked against the permissions the user agreed to.
+- An extension can show up to five screenshots on its page in Odyn, listed in `odyn.screenshots`. They aren't part of the download: `index.json` links to each one in this repo, pinned to a commit. See [CONTRIBUTING.md](CONTRIBUTING.md#screenshots).
 
 ## Make an extension
 

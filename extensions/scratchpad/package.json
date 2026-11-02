@@ -23,6 +23,11 @@
         "icon": "pencil",
         "height": 260
       }
+    ],
+    "screenshots": [
+      "screenshots/1.webp",
+      "screenshots/2.webp",
+      "screenshots/3.webp"
     ]
   },
   "dependencies": {
