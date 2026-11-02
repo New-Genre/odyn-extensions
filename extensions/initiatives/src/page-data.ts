@@ -52,9 +52,11 @@ export function createdId(reply: string): string | null {
   return /\(id ([^)\s]+)\)/.exec(reply)?.[1] ?? null
 }
 
-/** The workspace a chat belongs to: its workspace's main chat, or itself. */
-export function workspaceOf(chats: readonly ChatSummary[], chatId: string): string {
-  return chats.find((chat) => chat.id === chatId)?.workspaceChatId ?? chatId
+/** The workspace a chat belongs to, or null when the chat is not in this project's list. */
+export function workspaceOf(chats: readonly ChatSummary[], chatId: string): string | null {
+  const chat = chats.find((entry) => entry.id === chatId)
+  if (chat === undefined) return null
+  return chat.workspaceChatId ?? chat.id
 }
 
 export function matches(query: string, ...fields: ReadonlyArray<string | null>): boolean {

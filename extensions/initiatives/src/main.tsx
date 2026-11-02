@@ -63,30 +63,38 @@ function TitleForm({ label, onSubmit, onCancel }: {
 }): ReactElement {
   const [title, setTitle] = useState('')
   const [busy, setBusy] = useState(false)
+  const [failure, setFailure] = useState<string | null>(null)
   async function submit(event: FormEvent): Promise<void> {
     event.preventDefault()
     if (title.trim() === '') return
     setBusy(true)
+    setFailure(null)
     try {
       await onSubmit(title.trim())
+    } catch (caught) {
+      console.error('[initiatives] could not create it', caught)
+      setFailure(errorText(caught))
     } finally {
       setBusy(false)
     }
   }
   return (
-    <form className="flex items-center gap-2" onSubmit={(event) => void submit(event)}>
-      <label className="sr-only" htmlFor="new-title">{label}</label>
-      <input
-        id="new-title"
-        type="text"
-        autoFocus
-        value={title}
-        placeholder={label}
-        onChange={(event) => setTitle(event.target.value)}
-        onKeyDown={(event) => { if (event.key === 'Escape') onCancel() }}
-        className="h-8 min-w-0 flex-1 rounded-md border bg-background px-2 text-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-      />
-      <Button size="sm" type="submit" disabled={busy}>Create</Button>
+    <form className="flex flex-col gap-1" onSubmit={(event) => void submit(event)}>
+      <div className="flex items-center gap-2">
+        <label className="sr-only" htmlFor="new-title">{label}</label>
+        <input
+          id="new-title"
+          type="text"
+          autoFocus
+          value={title}
+          placeholder={label}
+          onChange={(event) => setTitle(event.target.value)}
+          onKeyDown={(event) => { if (event.key === 'Escape') onCancel() }}
+          className="h-8 min-w-0 flex-1 rounded-md border bg-background px-2 text-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        />
+        <Button size="sm" type="submit" disabled={busy}>Create</Button>
+      </div>
+      {failure !== null && <p role="alert" className="text-xs text-destructive">{failure}</p>}
     </form>
   )
 }
@@ -281,7 +289,7 @@ function App(): ReactElement {
     const reply = creating === 'initiative'
       ? await odyn.notes.run('CreateInitiative', { projectId }, { title })
       : await odyn.notes.run('CreateNote', { projectId }, { title, markdown: `# ${title}\n` })
-    if (reply.isError) { setError(reply.text); return }
+    if (reply.isError) throw new Error(reply.text)
     const id = createdId(reply.text)
     const kind = creating
     setCreating(null)
@@ -289,6 +297,14 @@ function App(): ReactElement {
     if (id !== null) setSelection(kind === 'initiative' ? { kind: 'initiative', id } : { kind: 'note', id, initiativeId: null })
   }
 
+  if (projects === null && error !== null) {
+    return (
+      <div role="alert" className="flex flex-col items-start gap-3 p-6 text-sm">
+        <p className="text-destructive">{error}</p>
+        <Button size="sm" variant="outline" onClick={() => { setError(null); setContext((current) => current === null ? null : { ...current }) }}>Try again</Button>
+      </div>
+    )
+  }
   if (projects === null || (projectId !== null && data === null && error === null)) return <PageSkeleton />
   if (projectId === null) {
     return <p className="p-6 text-sm text-muted-foreground">Add a project to Odyn first, then come back to group its chats into initiatives.</p>

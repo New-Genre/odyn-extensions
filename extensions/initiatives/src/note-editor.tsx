@@ -40,6 +40,11 @@ export function NoteEditor({ odyn, projectId, noteId, backLabel, onBack, onChang
   const base = useRef<ExtensionNote | null>(null)
   /** Set once a clash is found, so no more saves start until the person reloads. */
   const clashed = useRef(false)
+  /** The newest text waiting to be saved, and whether a save is running now. */
+  const pending = useRef<string | null>(null)
+  const running = useRef(false)
+  /** What is in the box right now, for the save on the way out. */
+  const latest = useRef('')
 
   const load = useCallback(async (): Promise<void> => {
     try {
@@ -59,7 +64,7 @@ export function NoteEditor({ odyn, projectId, noteId, backLabel, onBack, onChang
     }
   }, [odyn, projectId, noteId])
 
-  const save = useCallback(async (text: string): Promise<void> => {
+  const saveOnce = useCallback(async (text: string): Promise<void> => {
     const started = base.current
     if (started === null) return
     setState('saving')
@@ -84,14 +89,43 @@ export function NoteEditor({ odyn, projectId, noteId, backLabel, onBack, onChang
     }
   }, [odyn, projectId, noteId])
 
+  /**
+   * Saves run one at a time. Text typed while a save is running waits and goes
+   * next, starting from the copy that save left behind, so two saves never
+   * race and report a clash with each other.
+   */
+  const save = useCallback(async (text: string): Promise<void> => {
+    pending.current = text
+    if (running.current) return
+    running.current = true
+    try {
+      while (pending.current !== null && !clashed.current) {
+        const next = pending.current
+        pending.current = null
+        await saveOnce(next)
+      }
+    } finally {
+      running.current = false
+    }
+  }, [saveOnce])
+
   useEffect(() => { void load() }, [load])
 
   useEffect(() => {
+    latest.current = markdown
     if (base.current === null || markdown === base.current.markdown || clashed.current) return
     setState('waiting')
     const timer = setTimeout(() => void save(markdown), SAVE_DELAY_MS)
     return () => clearTimeout(timer)
   }, [markdown, save])
+
+  // Leaving the document (another one opened, back, or the page closed) saves
+  // whatever was still waiting instead of dropping it.
+  useEffect(() => () => {
+    const text = latest.current
+    if (base.current === null || clashed.current || text === base.current.markdown) return
+    void save(text)
+  }, [save])
 
   async function rename(): Promise<void> {
     const next = title.trim()
@@ -109,6 +143,14 @@ export function NoteEditor({ odyn, projectId, noteId, backLabel, onBack, onChang
   }
 
   if (missing) return <p className="p-6 text-sm text-muted-foreground">This document no longer exists. Pick another from the list.</p>
+  if (note === null && state === 'failed') {
+    return (
+      <div role="alert" className="flex flex-col items-start gap-3 p-6 text-sm">
+        <p className="text-destructive">{message ?? 'This document could not be opened.'}</p>
+        <Button size="sm" variant="outline" onClick={() => void load()}>Try again</Button>
+      </div>
+    )
+  }
   if (note === null) {
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 p-6" aria-busy="true" aria-label="Loading document">
