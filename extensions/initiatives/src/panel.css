@@ -1,0 +1,13 @@
+/* Odyn's public look, so the Initiatives page matches the rest of the app. */
+@import "@odyn-app/api/theme.css";
+
+html,
+body {
+  background: transparent;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
