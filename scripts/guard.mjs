@@ -74,6 +74,20 @@ export function folderProblems(changed, { maintainer }) {
   return { ids, problems, notes: [] }
 }
 
+/** The opening bytes every file of each picture type starts with. */
+const PICTURE_SIGNATURES = {
+  '.png': [{ at: 0, bytes: [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a] }],
+  '.jpg': [{ at: 0, bytes: [0xff, 0xd8, 0xff] }],
+  '.jpeg': [{ at: 0, bytes: [0xff, 0xd8, 0xff] }],
+  '.webp': [{ at: 0, bytes: [...Buffer.from('RIFF')] }, { at: 8, bytes: [...Buffer.from('WEBP')] }],
+}
+
+/** Whether a file's contents really are the picture type its name says. */
+function looksLikePicture(contents, extension) {
+  const signature = PICTURE_SIGNATURES[extension] ?? []
+  return signature.length > 0 && signature.every(({ at, bytes }) => bytes.every((byte, index) => contents[at + index] === byte))
+}
+
 /**
  * Problems with a manifest's `screenshots`: a list of up to five pictures,
  * each a plain path to a file inside the extension's own folder.
@@ -106,9 +120,18 @@ export function screenshotProblems(folder, screenshots) {
       problems.push(`Screenshot \`${path}\` is outside the extension's folder.`)
       continue
     }
+    // A link inside the folder still isn't allowed: GitHub serves a link as the
+    // text of where it points, not as the picture.
+    if (lstatSync(full).isSymbolicLink()) {
+      problems.push(`Screenshot \`${path}\` is a link; add the picture file itself.`)
+      continue
+    }
     const stats = statSync(full)
     if (!stats.isFile()) problems.push(`Screenshot \`${path}\` isn't a file.`)
     else if (stats.size > MAX_SCREENSHOT_BYTES) problems.push(`Screenshot \`${path}\` is ${(stats.size / 1024 / 1024).toFixed(1)} MB; the limit is ${MAX_SCREENSHOT_BYTES / 1024 / 1024} MB.`)
+    else if (!looksLikePicture(readFileSync(full), extname(path).toLowerCase())) {
+      problems.push(`Screenshot \`${path}\` isn't really a ${extname(path).slice(1)} picture.`)
+    }
   }
   return problems
 }

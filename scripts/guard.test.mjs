@@ -97,32 +97,48 @@ describe('manifestChanges', () => {
 })
 
 describe('screenshotProblems', () => {
-  const picture = Buffer.from([137, 80, 78, 71])
+  const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0])
+  const webp = Buffer.concat([Buffer.from('RIFF'), Buffer.alloc(4), Buffer.from('WEBPVP8 ')])
 
   test('no screenshots, or good ones, pass', () => {
-    const folder = extensionFolder({ 'screenshots/1.png': picture, 'screenshots/two shots.webp': picture })
+    const folder = extensionFolder({ 'screenshots/1.png': png, 'screenshots/two shots.webp': webp })
     expect(screenshotProblems(folder, undefined)).toEqual([])
     expect(screenshotProblems(folder, ['screenshots/1.png', 'screenshots/two shots.webp'])).toEqual([])
   })
 
   test('fails a list that isn’t a list of paths, or has more than five', () => {
-    const folder = extensionFolder({ 'a.png': picture })
+    const folder = extensionFolder({ 'a.png': png })
     expect(screenshotProblems(folder, 'a.png')).toHaveLength(1)
     expect(screenshotProblems(folder, [1])).toHaveLength(1)
     expect(screenshotProblems(folder, Array(6).fill('a.png'))).toHaveLength(1)
   })
 
   test('fails paths that leave the folder, odd paths and other file kinds', () => {
-    const folder = extensionFolder({ 'shot.gif': picture, 'shots/a.png': picture })
+    const folder = extensionFolder({ 'shot.gif': png, 'shots/a.png': png })
     const bad = ['../x.png', '/etc/x.png', './shots/a.png', 'shots//a.png', 'shots\\a.png', 'shot.gif', 'notes.txt']
     for (const path of bad) expect(screenshotProblems(folder, [path])).toHaveLength(1)
   })
 
   test('fails missing files, folders, links out of the folder and pictures over 1 MB', () => {
-    const outside = extensionFolder({ 'secret.png': picture })
+    const outside = extensionFolder({ 'secret.png': png })
     const folder = extensionFolder({ 'big.png': Buffer.alloc(1024 * 1024 + 1), 'folder.png/x': 'x' })
     symlinkSync(join(outside, 'secret.png'), join(folder, 'link.png'))
     expect(screenshotProblems(folder, ['missing.png', 'folder.png', 'link.png', 'big.png'])).toHaveLength(4)
+  })
+})
+
+describe('screenshotProblems file contents', () => {
+  test('rejects files that are not the picture type their name says', () => {
+    const folder = extensionFolder({ 'text.webp': 'not a picture', 'png-named.webp': Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]) })
+    expect(screenshotProblems(folder, ['text.webp'])).toHaveLength(1)
+    expect(screenshotProblems(folder, ['png-named.webp'])).toHaveLength(1)
+  })
+
+  test('rejects a link even when it points inside the folder', () => {
+    const folder = extensionFolder({ 'real.png': Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]) })
+    symlinkSync(join(folder, 'real.png'), join(folder, 'link.png'))
+    expect(screenshotProblems(folder, ['real.png'])).toEqual([])
+    expect(screenshotProblems(folder, ['link.png'])).toHaveLength(1)
   })
 })
 
