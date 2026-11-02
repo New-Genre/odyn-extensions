@@ -5,7 +5,7 @@
     "": {
       "name": "odyn-extensions",
       "devDependencies": {
-        "@odyn-app/api": "^0.2.0",
+        "@odyn-app/api": "^0.3.0",
         "@tailwindcss/postcss": "^4.3.3",
         "@types/bun": "latest",
         "@types/react": "^19.2.17",
@@ -125,7 +125,7 @@
 
     "@mermaid-js/parser": ["@mermaid-js/parser@0.6.3", "", { "dependencies": { "langium": "3.3.1" } }, "sha512-lnjOhe7zyHjc+If7yT4zoedx2vo4sHaTmtkl1+or8BRTnCtDmcTpAjpzDSfCZrshM5bCoz0GyidzadJAH1xobA=="],
 
-    "@odyn-app/api": ["@odyn-app/api@0.2.0", "", { "dependencies": { "@tailwindcss/postcss": "^4.3.3", "@vitejs/plugin-react": "^6.0.4", "class-variance-authority": "^0.7.1", "clsx": "^2.1.1", "tailwind-merge": "^3.6.0", "tailwindcss": "^4.3.3", "vite": "^8.1.5" }, "peerDependencies": { "react": ">=19" }, "bin": { "odyn-extension": "cli/odyn-extension.mjs" } }, "sha512-SWW8AtGzgESSmxbwK0Qk6yifX8rixO2hpTAQKXj7ew2GoCT0B3kasVyKcNU6kWNnp6XKI72jogefJ3YXDCf1qQ=="],
+    "@odyn-app/api": ["@odyn-app/api@0.3.0", "", { "dependencies": { "@tailwindcss/postcss": "^4.3.3", "@vitejs/plugin-react": "^6.0.4", "class-variance-authority": "^0.7.1", "clsx": "^2.1.1", "tailwind-merge": "^3.6.0", "tailwindcss": "^4.3.3", "vite": "^8.1.5" }, "peerDependencies": { "react": ">=19" }, "bin": { "odyn-extension": "cli/odyn-extension.mjs" } }, "sha512-R2sXKsx+fzkOV+YfLM+YBBtBrYuMDGIAeMyHzBwwh4/2L4ibgVgO9Iyv1vPtdx3Gifgy9e/VtI6Vf7HmJW78IQ=="],
 
     "@oxc-project/types": ["@oxc-project/types@0.156.0", "", {}, "sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw=="],
 
@@ -764,6 +764,10 @@
     "mermaid/@mermaid-js/parser": ["@mermaid-js/parser@1.2.1", "", { "dependencies": { "@chevrotain/types": "~11.1.2" } }, "sha512-n12NohV3mrUyUL2o93IgG/ifeW9FTyeJn3zDxkhwa8MJ9Fxg3HQMlA3RiGmD/3UnJvheztkjjQAjA2T4LmUcpw=="],
 
     "mermaid/roughjs": ["roughjs@4.6.6", "", { "dependencies": { "hachure-fill": "^0.5.2", "path-data-parser": "^0.1.0", "points-on-curve": "^0.2.0", "points-on-path": "^0.2.1" } }, "sha512-ZUz/69+SYpFN/g/lUlo2FXcIjRkSu3nDarreVdGGndHEBJ6cXPdKguS8JGxwj5HA5xIbVKSmLgr5b3AWxtRfvQ=="],
+
+    "odyn-extension-phones/@odyn-app/api": ["@odyn-app/api@0.2.0", "", { "dependencies": { "@tailwindcss/postcss": "^4.3.3", "@vitejs/plugin-react": "^6.0.4", "class-variance-authority": "^0.7.1", "clsx": "^2.1.1", "tailwind-merge": "^3.6.0", "tailwindcss": "^4.3.3", "vite": "^8.1.5" }, "peerDependencies": { "react": ">=19" }, "bin": { "odyn-extension": "cli/odyn-extension.mjs" } }, "sha512-SWW8AtGzgESSmxbwK0Qk6yifX8rixO2hpTAQKXj7ew2GoCT0B3kasVyKcNU6kWNnp6XKI72jogefJ3YXDCf1qQ=="],
+
+    "odyn-extension-scratchpad/@odyn-app/api": ["@odyn-app/api@0.2.0", "", { "dependencies": { "@tailwindcss/postcss": "^4.3.3", "@vitejs/plugin-react": "^6.0.4", "class-variance-authority": "^0.7.1", "clsx": "^2.1.1", "tailwind-merge": "^3.6.0", "tailwindcss": "^4.3.3", "vite": "^8.1.5" }, "peerDependencies": { "react": ">=19" }, "bin": { "odyn-extension": "cli/odyn-extension.mjs" } }, "sha512-SWW8AtGzgESSmxbwK0Qk6yifX8rixO2hpTAQKXj7ew2GoCT0B3kasVyKcNU6kWNnp6XKI72jogefJ3YXDCf1qQ=="],
 
     "points-on-path/points-on-curve": ["points-on-curve@0.2.0", "", {}, "sha512-0mYKnYYe9ZcqMCWhUjItv/oHjvgEsfKvnUTg8sAtnHr3GVy7rGkXCb6d5cSyqrWqL4k81b9CPg3urd+T7aop3A=="],
 
