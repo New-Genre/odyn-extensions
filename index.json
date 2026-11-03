@@ -108,6 +108,371 @@
     },
     {
       "manifest": {
+        "id": "initiatives",
+        "title": "Initiatives",
+        "description": "Group related chats and documents under one goal. Linked chats start with a short summary, and agents keep the documents up to date.",
+        "author": "Odyn",
+        "version": "1.0.0",
+        "apiVersion": 6,
+        "icon": "list",
+        "owners": [
+          "jacksmethurst"
+        ],
+        "permissions": [
+          "notes:read",
+          "notes:write",
+          "agent:tools",
+          "agent:context",
+          "chats:read",
+          "projects:read",
+          "ui:sidebar",
+          "ui:dialog",
+          "ui:dashboard",
+          "ui:chatHeader"
+        ],
+        "commands": [
+          {
+            "name": "open-initiatives",
+            "title": "Open initiatives",
+            "placement": "sidebarPanel"
+          },
+          {
+            "name": "attach-initiative",
+            "title": "Attach initiative",
+            "placement": "sidebarPanel"
+          },
+          {
+            "name": "open-from-chip",
+            "title": "Open linked initiative",
+            "placement": "sidebarPanel"
+          },
+          {
+            "name": "dashboard",
+            "title": "Initiatives card",
+            "placement": "sidebarPanel"
+          },
+          {
+            "name": "context",
+            "title": "Linked initiative note",
+            "placement": "chatContext"
+          },
+          {
+            "name": "suggest-link",
+            "title": "Suggest linking this chat",
+            "placement": "agentTool",
+            "description": "Ask the person whether this chat belongs to an initiative. Shows a card with 'Not now' and 'Link chat'; nothing is linked unless they click. Use when the work clearly fits an existing initiative and the chat is not linked yet.",
+            "inputs": [
+              {
+                "name": "initiativeId",
+                "description": "The initiative to suggest.",
+                "type": "string",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "list-initiatives",
+            "title": "List initiatives",
+            "placement": "agentTool",
+            "description": "List this project's initiatives: id, title, status and how many documents. Check here before creating a new one.",
+            "inputs": [
+              {
+                "name": "query",
+                "description": "Words to look for in titles and descriptions.",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "read-initiative",
+            "title": "Read initiative",
+            "placement": "agentTool",
+            "description": "Read an initiative's index: its groups and documents with titles, descriptions and sizes, never their bodies.",
+            "inputs": [
+              {
+                "name": "initiativeId",
+                "description": "The initiative. Leave out for the one this chat is linked to.",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "read-document",
+            "title": "Read document",
+            "placement": "agentTool",
+            "description": "Read one document or note as markdown. Use `outline` first for long ones, then read a `section`.",
+            "inputs": [
+              {
+                "name": "noteId",
+                "description": "The document or note id.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "section",
+                "description": "A heading, or a path of headings joined by \">\", to read just that part.",
+                "type": "string"
+              },
+              {
+                "name": "outline",
+                "description": "Return only the headings with their sizes.",
+                "type": "boolean"
+              }
+            ]
+          },
+          {
+            "name": "list-notes",
+            "title": "List notes",
+            "placement": "agentTool",
+            "description": "List this project's notes and documents, newest first.",
+            "inputs": [
+              {
+                "name": "limit",
+                "description": "How many to list.",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "create-initiative",
+            "title": "Create initiative",
+            "placement": "agentTool",
+            "description": "Create an initiative: a folder of documents for one piece of work. It is not linked to this chat; use suggest-link to ask.",
+            "inputs": [
+              {
+                "name": "title",
+                "description": "Short title.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "description",
+                "description": "One line on what it is for.",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "create-document",
+            "title": "Create document",
+            "placement": "agentTool",
+            "description": "Write a new document into an initiative, or a loose note with `loose`.",
+            "inputs": [
+              {
+                "name": "title",
+                "description": "Short title.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "markdown",
+                "description": "The body, in markdown.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "initiativeId",
+                "description": "The initiative. Leave out for the one this chat is linked to.",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "description": "One line on what it holds.",
+                "type": "string"
+              },
+              {
+                "name": "group",
+                "description": "The group to put it in; left out, the active group.",
+                "type": "string"
+              },
+              {
+                "name": "loose",
+                "description": "Write a loose note in no initiative.",
+                "type": "boolean"
+              }
+            ]
+          },
+          {
+            "name": "edit-document",
+            "title": "Replace document",
+            "placement": "agentTool",
+            "description": "Replace a whole document with new markdown. Prefer patch-document for small changes.",
+            "inputs": [
+              {
+                "name": "noteId",
+                "description": "The document or note id.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "markdown",
+                "description": "The new body.",
+                "type": "string",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "patch-document",
+            "title": "Patch document",
+            "placement": "agentTool",
+            "description": "Change parts of a document without rewriting it.",
+            "inputs": [
+              {
+                "name": "noteId",
+                "description": "The document or note id.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "edits",
+                "description": "JSON list of edits, each {\"op\":\"replace_text\",\"old_text\",\"new_text\"} | {\"op\":\"append\",\"section\",\"text\"} | {\"op\":\"replace_section\",\"section\",\"text\"} | {\"op\":\"tick\",\"task\",\"done\"} | {\"op\":\"set\",\"property\",\"value\"}.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "version",
+                "description": "The version read-document returned, to refuse the change if someone edited it since.",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "rename-document",
+            "title": "Rename document",
+            "placement": "agentTool",
+            "description": "Give a document or note a new title.",
+            "inputs": [
+              {
+                "name": "noteId",
+                "description": "The document or note id.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "title",
+                "description": "The new title.",
+                "type": "string",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "delete-document",
+            "title": "Delete document",
+            "placement": "agentTool",
+            "description": "Delete a document or note. Only when the person asked for it.",
+            "inputs": [
+              {
+                "name": "noteId",
+                "description": "The document or note id.",
+                "type": "string",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "move-notes",
+            "title": "Move notes into initiative",
+            "placement": "agentTool",
+            "description": "Move loose notes into an initiative.",
+            "inputs": [
+              {
+                "name": "noteIds",
+                "description": "Note ids, separated by commas.",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "initiativeId",
+                "description": "The initiative. Leave out for the one this chat is linked to.",
+                "type": "string"
+              },
+              {
+                "name": "makePrivate",
+                "description": "Confirmed by the person: make shared notes private so they can move.",
+                "type": "boolean"
+              },
+              {
+                "name": "group",
+                "description": "The group to put them in.",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "mark-complete",
+            "title": "Mark initiative complete",
+            "placement": "agentTool",
+            "description": "Mark an initiative as finished, with a one-line summary of what shipped.",
+            "inputs": [
+              {
+                "name": "initiativeId",
+                "description": "The initiative. Leave out for the one this chat is linked to.",
+                "type": "string"
+              },
+              {
+                "name": "summary",
+                "description": "What was done, in one line.",
+                "type": "string",
+                "required": true
+              }
+            ]
+          },
+          {
+            "name": "edit-groups",
+            "title": "Edit initiative groups",
+            "placement": "agentTool",
+            "description": "Create, rename, reorder, finish, delete or restore an initiative's groups.",
+            "inputs": [
+              {
+                "name": "initiativeId",
+                "description": "The initiative. Leave out for the one this chat is linked to.",
+                "type": "string"
+              },
+              {
+                "name": "changes",
+                "description": "JSON object with any of: create [{name, active?}], rename [{group, to}], delete [names], restore [names], order [names], setActive name|null, setDone [{group, done}].",
+                "type": "string",
+                "required": true
+              }
+            ]
+          }
+        ],
+        "surfaces": [
+          {
+            "id": "page",
+            "title": "Initiatives",
+            "placement": "dialog",
+            "entry": "dist/panel/index.html"
+          }
+        ],
+        "sidebarItem": {
+          "title": "Initiatives",
+          "icon": "note",
+          "command": "open-initiatives"
+        },
+        "dashboardCard": {
+          "command": "dashboard"
+        },
+        "composerMenuItem": {
+          "title": "Attach initiative",
+          "icon": "note",
+          "command": "attach-initiative"
+        },
+        "chatChip": {
+          "command": "open-from-chip"
+        },
+        "agent": {
+          "summary": "Initiatives: read and update the initiative this chat is linked to, its documents and the project's loose notes, and suggest linking a chat to an initiative."
+        }
+      },
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/initiatives-v1.0.0/initiatives-v1.0.0.tar.gz",
+      "size": 320525,
+      "sha256": "0ac7cb24fa52238871de2250ad6fd9f5278c00bcd30b38894eca7d5da9aa18b6"
+    },
+    {
+      "manifest": {
         "id": "message-outline",
         "title": "Message outline",
         "description": "Show a slim column of ticks beside a chat, one per message you sent. Hover a tick to see the message; click it to jump there.",
