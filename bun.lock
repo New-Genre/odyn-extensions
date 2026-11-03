@@ -32,16 +32,6 @@
       "name": "odyn-extension-fast-browser",
       "version": "1.0.0",
     },
-    "extensions/initiatives": {
-      "name": "odyn-extension-initiatives",
-      "version": "1.0.1",
-      "dependencies": {
-        "@fontsource-variable/inter": "^5.3.0",
-        "nucleo-ui-essential-outline-18": "^1.1.8",
-        "react": "^19.2.8",
-        "react-dom": "^19.2.8",
-      },
-    },
     "extensions/message-outline": {
       "name": "odyn-extension-message-outline",
       "version": "1.0.0",
@@ -554,8 +544,6 @@
     "odyn-extension-design-skills": ["odyn-extension-design-skills@workspace:extensions/design-skills"],
 
     "odyn-extension-fast-browser": ["odyn-extension-fast-browser@workspace:extensions/fast-browser"],
-
-    "odyn-extension-initiatives": ["odyn-extension-initiatives@workspace:extensions/initiatives"],
 
     "odyn-extension-message-outline": ["odyn-extension-message-outline@workspace:extensions/message-outline"],
 
