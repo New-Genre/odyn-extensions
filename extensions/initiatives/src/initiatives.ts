@@ -132,7 +132,7 @@ export function dashboardCard(rows: readonly DashboardRow[]): ExtensionDashboard
     .toSorted((a, b) => b.working - a.working || b.chats - a.chats || b.initiative.updatedAt.localeCompare(a.initiative.updatedAt))
     .slice(0, DASHBOARD_MAX_ITEMS)
   return {
-    title: 'Initiatives',
+    title: 'Active',
     items: active.map((row) => ({
       id: row.initiative.id,
       title: shorten(row.initiative.title, DASHBOARD_MAX_TITLE),

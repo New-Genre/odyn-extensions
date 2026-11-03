@@ -1,13 +1,13 @@
 {
   "name": "odyn-extension-initiatives",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "initiatives",
     "title": "Initiatives",
     "description": "Group related chats and documents under one goal. Linked chats start with a short summary, and agents keep the documents up to date.",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 6,
     "icon": "list",
     "owners": [
