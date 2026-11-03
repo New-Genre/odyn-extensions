@@ -93,8 +93,10 @@ function TitleForm({ label, onSubmit, onCancel }: {
           placeholder={label}
           onChange={(event) => setTitle(event.target.value)}
           onKeyDown={(event) => {
-            if (event.key === 'Escape') onCancel()
-            if (event.key === 'Enter') void submit()
+            // Not while a create is running: the result would land on a closed box.
+            if (event.key === 'Escape' && !busy) onCancel()
+            // Enter that confirms an IME character (Japanese, Chinese…) is not "create".
+            if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229) void submit()
           }}
           className="h-8 min-w-0 flex-1 rounded-md border bg-background px-2 text-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         />
