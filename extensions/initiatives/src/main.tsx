@@ -3,7 +3,7 @@
 // loose notes are listed on the left; the open one shows on the right.
 import '@fontsource-variable/inter'
 import './panel.css'
-import { StrictMode, useCallback, useEffect, useMemo, useState, type FormEvent, type ReactElement } from 'react'
+import { StrictMode, useCallback, useEffect, useMemo, useState, type ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { connectSurface, type ExtensionInitiative, type ProjectSummary, type SurfaceContext } from '@odyn-app/api'
 import { Button, cn, Skeleton } from '@odyn-app/api/ui'
@@ -55,7 +55,11 @@ function PageSkeleton(): ReactElement {
   )
 }
 
-/** A one-field form that appears in place of a "New …" button. */
+/**
+ * A one-field box that appears in place of a "New …" button. Not a <form>:
+ * Odyn shows this page in a sandbox that blocks form submission outright, so
+ * Enter and the button call `submit` directly.
+ */
 function TitleForm({ label, onSubmit, onCancel }: {
   readonly label: string
   readonly onSubmit: (title: string) => Promise<void>
@@ -64,9 +68,8 @@ function TitleForm({ label, onSubmit, onCancel }: {
   const [title, setTitle] = useState('')
   const [busy, setBusy] = useState(false)
   const [failure, setFailure] = useState<string | null>(null)
-  async function submit(event: FormEvent): Promise<void> {
-    event.preventDefault()
-    if (title.trim() === '') return
+  async function submit(): Promise<void> {
+    if (busy || title.trim() === '') return
     setBusy(true)
     setFailure(null)
     try {
@@ -79,7 +82,7 @@ function TitleForm({ label, onSubmit, onCancel }: {
     }
   }
   return (
-    <form className="flex flex-col gap-1" onSubmit={(event) => void submit(event)}>
+    <div className="flex flex-col gap-1">
       <div className="flex items-center gap-2">
         <label className="sr-only" htmlFor="new-title">{label}</label>
         <input
@@ -89,13 +92,18 @@ function TitleForm({ label, onSubmit, onCancel }: {
           value={title}
           placeholder={label}
           onChange={(event) => setTitle(event.target.value)}
-          onKeyDown={(event) => { if (event.key === 'Escape') onCancel() }}
+          onKeyDown={(event) => {
+            // Not while a create is running: the result would land on a closed box.
+            if (event.key === 'Escape' && !busy) onCancel()
+            // Enter that confirms an IME character (Japanese, Chinese…) is not "create".
+            if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229) void submit()
+          }}
           className="h-8 min-w-0 flex-1 rounded-md border bg-background px-2 text-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         />
-        <Button size="sm" type="submit" disabled={busy}>Create</Button>
+        <Button size="sm" disabled={busy} onClick={() => void submit()}>Create</Button>
       </div>
       {failure !== null && <p role="alert" className="text-xs text-destructive">{failure}</p>}
-    </form>
+    </div>
   )
 }
 
