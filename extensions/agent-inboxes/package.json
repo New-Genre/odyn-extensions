@@ -1,18 +1,26 @@
 {
   "name": "odyn-extension-agent-inboxes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "agent-inboxes",
     "title": "Agent inboxes",
     "description": "Give agents throwaway email addresses for sign-ups and verification codes. Needs you signed in to Odyn.",
+    "icon": "inbox",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 4,
-    "permissions": ["agent:tools"],
+    "permissions": [
+      "agent:tools"
+    ],
     "commands": [],
     "agent": {
       "summary": "make receive-only email addresses and read the emails that arrive, for sign-ups and verification codes"
-    }
+    },
+    "screenshots": [
+      "screenshots/1.webp",
+      "screenshots/2.webp",
+      "screenshots/3.webp"
+    ]
   }
 }

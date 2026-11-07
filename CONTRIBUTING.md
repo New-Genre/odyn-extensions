@@ -45,6 +45,21 @@ This makes a working extension with one command. Its `package.json` holds the ma
 
 `owners` lists the GitHub usernames of the people who look after the extension. They're asked to review every change to it. Ask only for the permissions you use — people see the list before they install.
 
+### Screenshots
+
+Optionally, show up to five pictures on the extension's page in Odyn. Put them in the extension's folder and list them in order in `odyn.screenshots`:
+
+```json
+"odyn": {
+  "id": "standup-notes",
+  "screenshots": ["screenshots/1.png", "screenshots/2.png"]
+}
+```
+
+Each one must be a `.png`, `.jpg`, `.jpeg` or `.webp` file of 1 MB or less, written as a plain path inside the folder (no `..`, nothing starting with `/`). Screenshots aren't part of the download — Odyn shows them straight from this repo.
+
+Changing the list updates the page without a new version. To swap a picture for a new one, give it a new file name (or raise `version`): links are pinned, so a picture replaced under the same name keeps showing the old one until the next release.
+
 ## 2. Write it
 
 What you write depends on what the extension has:
@@ -98,9 +113,10 @@ Every pull request is checked automatically before anyone reviews it. It fails i
 - the extension contains compiled programs, archives, binary files, links, `node_modules` or built output — the release builds it from your source;
 - the code is minified or squashed onto very long lines, uses `eval` or `new Function`, or loads code from the internet;
 - `package.json` runs scripts on install, or a dependency does, or a dependency comes from anywhere but npm;
-- someone who doesn't own an extension changes who owns it.
+- someone who doesn't own an extension changes who owns it;
+- a screenshot is missing, too big, not a picture, or outside the extension's folder.
 
-It also comments a summary of what changed — new permissions, websites, packages — so the review is quick. CodeRabbit adds an AI review too.
+It also comments a summary of what changed — new permissions, websites, packages, screenshots — so the review is quick. CodeRabbit adds an AI review too.
 
 ## Updating it later
 
@@ -111,6 +127,7 @@ To work on an extension that's already published, get just that one:
 ```bash
 bunx --package @odyn-app/api odyn-extension pull standup-notes
 ```
+
 
 ## What's kept for Odyn's own extensions
 

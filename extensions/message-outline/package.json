@@ -1,15 +1,21 @@
 {
   "name": "odyn-extension-message-outline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "message-outline",
     "title": "Message outline",
     "description": "Show a slim column of ticks beside a chat, one per message you sent. Hover a tick to see the message; click it to jump there.",
+    "icon": "list",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 4,
     "permissions": [],
-    "commands": []
+    "commands": [],
+    "screenshots": [
+      "screenshots/1.webp",
+      "screenshots/2.webp",
+      "screenshots/3.webp"
+    ]
   }
 }

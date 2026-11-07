@@ -16,6 +16,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { isOdynExtensionId } from '@odyn-app/api'
 import { buildExtension, checkExtension as checkManifest } from '@odyn-app/api/build'
+import { screenshotProblems } from './guard.mjs'
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const SOURCE_ROOT = join(repoRoot, 'extensions')
@@ -35,7 +36,7 @@ export function readPackage(folder) {
   return JSON.parse(readFileSync(join(SOURCE_ROOT, folder, 'package.json'), 'utf8'))
 }
 
-/** Checks one extension's manifest, folder name and owners. Returns the problems found. */
+/** Checks one extension's manifest, folder name, owners and screenshots. Returns the problems found. */
 export function checkExtension(folder) {
   const official = isOdynExtensionId(folder)
   const problems = [...checkManifest(join(SOURCE_ROOT, folder), { official })]
@@ -44,6 +45,7 @@ export function checkExtension(folder) {
   if (!official && !(Array.isArray(pkg.odyn?.owners) && pkg.odyn.owners.length > 0)) {
     problems.push('odyn.owners must list at least one GitHub username — the people who look after it.')
   }
+  problems.push(...screenshotProblems(join(SOURCE_ROOT, folder), pkg.odyn?.screenshots))
   return problems
 }
 

@@ -1,13 +1,14 @@
 {
   "name": "odyn-extension-phones",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "phones",
     "title": "Phones",
     "description": "Let agents run iPhone simulators and Android emulators that you watch live in the sidebar.",
+    "icon": "phone",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 3,
     "platforms": [
       "darwin"
@@ -157,7 +158,12 @@
           "program": "emulator"
         }
       ]
-    }
+    },
+    "screenshots": [
+      "screenshots/1.webp",
+      "screenshots/2.webp",
+      "screenshots/3.webp"
+    ]
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

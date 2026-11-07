@@ -15,11 +15,12 @@
  *   - a package.json runs scripts on install, or pulls code from outside npm
  *   - a new dependency runs scripts on install, or doesn't exist
  *   - someone who doesn't own an extension changes who owns it
+ *   - a manifest's `screenshots` point at missing, oversized or outside files
  * and lists everything else worth a reviewer's eye in a report.
  */
 import { execFileSync } from 'node:child_process'
-import { existsSync, lstatSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { extname, join, relative, resolve } from 'node:path'
+import { existsSync, lstatSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from 'node:fs'
+import { extname, isAbsolute, join, posix, relative, resolve, sep } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 /** GitHub repo roles that count as Odyn's team. */
@@ -44,6 +45,10 @@ const NEW_PACKAGE_DAYS = 30
 /** Odyn's own packages, which are new by design. */
 const ODYN_SCOPE = '@odyn-app/'
 const DAY_MS = 24 * 60 * 60 * 1000
+/** The pictures shown on an extension's page in Odyn: how many, what kind, how big. */
+const MAX_SCREENSHOTS = 5
+const SCREENSHOT_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp'])
+const MAX_SCREENSHOT_BYTES = 1024 * 1024
 
 /** Source-code patterns: [pattern, what it is, whether it fails the check]. */
 const CODE_RULES = [
@@ -67,6 +72,68 @@ export function folderProblems(changed, { maintainer }) {
   if (outside.length > 0) problems.push(`Only files inside one \`extensions/<id>/\` folder may change. This also changes: ${outside.map((path) => `\`${path}\``).join(', ')}.`)
   if (ids.length > 1) problems.push(`Change one extension per pull request. This changes: ${ids.map((id) => `\`${id}\``).join(', ')}.`)
   return { ids, problems, notes: [] }
+}
+
+/** The opening bytes every file of each picture type starts with. */
+const PICTURE_SIGNATURES = {
+  '.png': [{ at: 0, bytes: [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a] }],
+  '.jpg': [{ at: 0, bytes: [0xff, 0xd8, 0xff] }],
+  '.jpeg': [{ at: 0, bytes: [0xff, 0xd8, 0xff] }],
+  '.webp': [{ at: 0, bytes: [...Buffer.from('RIFF')] }, { at: 8, bytes: [...Buffer.from('WEBP')] }],
+}
+
+/** Whether a file's contents really are the picture type its name says. */
+function looksLikePicture(contents, extension) {
+  const signature = PICTURE_SIGNATURES[extension] ?? []
+  return signature.length > 0 && signature.every(({ at, bytes }) => bytes.every((byte, index) => contents[at + index] === byte))
+}
+
+/**
+ * Problems with a manifest's `screenshots`: a list of up to five pictures,
+ * each a plain path to a file inside the extension's own folder.
+ * The release, the build check and the pull-request check all use this.
+ */
+export function screenshotProblems(folder, screenshots) {
+  if (screenshots === undefined) return []
+  if (!Array.isArray(screenshots) || !screenshots.every((path) => typeof path === 'string')) {
+    return ['odyn.screenshots must be a list of file paths, like ["screenshots/1.png"].']
+  }
+  const problems = []
+  if (screenshots.length > MAX_SCREENSHOTS) problems.push(`odyn.screenshots lists ${screenshots.length} pictures; the most is ${MAX_SCREENSHOTS}.`)
+  const root = realpathSync(folder)
+  for (const path of screenshots) {
+    if (isAbsolute(path) || path.includes('..') || path.includes('\\') || posix.normalize(path) !== path) {
+      problems.push(`Screenshot \`${path}\` must be a plain path inside the extension's folder, like \`screenshots/1.png\`.`)
+      continue
+    }
+    if (!SCREENSHOT_EXTENSIONS.has(extname(path).toLowerCase())) {
+      problems.push(`Screenshot \`${path}\` must be a .png, .jpg, .jpeg or .webp picture.`)
+      continue
+    }
+    const full = join(folder, path)
+    if (!existsSync(full)) {
+      problems.push(`Screenshot \`${path}\` isn't in the extension's folder.`)
+      continue
+    }
+    // Follows links to where the file really is, so a link can't point outside the folder.
+    if (!realpathSync(full).startsWith(`${root}${sep}`)) {
+      problems.push(`Screenshot \`${path}\` is outside the extension's folder.`)
+      continue
+    }
+    // A link inside the folder still isn't allowed: GitHub serves a link as the
+    // text of where it points, not as the picture.
+    if (lstatSync(full).isSymbolicLink()) {
+      problems.push(`Screenshot \`${path}\` is a link; add the picture file itself.`)
+      continue
+    }
+    const stats = statSync(full)
+    if (!stats.isFile()) problems.push(`Screenshot \`${path}\` isn't a file.`)
+    else if (stats.size > MAX_SCREENSHOT_BYTES) problems.push(`Screenshot \`${path}\` is ${(stats.size / 1024 / 1024).toFixed(1)} MB; the limit is ${MAX_SCREENSHOT_BYTES / 1024 / 1024} MB.`)
+    else if (!looksLikePicture(readFileSync(full), extname(path).toLowerCase())) {
+      problems.push(`Screenshot \`${path}\` isn't really a ${extname(path).slice(1)} picture.`)
+    }
+  }
+  return problems
 }
 
 /** Problems and warnings in one source file's text. */
@@ -171,6 +238,10 @@ export function manifestChanges(before, after, { author, maintainer }) {
   if (removed('permissions').length > 0) facts.push(`Drops permissions: ${removed('permissions').map((item) => `\`${item}\``).join(', ')}.`)
   if (added('allowedHosts').length > 0) facts.push(`**Can now reach:** ${added('allowedHosts').map((item) => `\`${item}\``).join(', ')}.`)
   if (now.agent && !was.agent) facts.push('**Gives the agent tools.**')
+  const pictures = (odyn) => (Array.isArray(odyn.screenshots) ? odyn.screenshots : [])
+  if (JSON.stringify(pictures(was)) !== JSON.stringify(pictures(now))) {
+    facts.push(pictures(now).length > 0 ? `Screenshots: ${pictures(now).map((item) => `\`${item}\``).join(', ')}.` : 'Removes the screenshots.')
+  }
 
   const ownersChanged = JSON.stringify([...(was.owners ?? [])].sort()) !== JSON.stringify([...(now.owners ?? [])].sort())
   if (before !== null && ownersChanged) {
@@ -271,6 +342,7 @@ async function main() {
       problems.push(...scan.problems.map((problem) => `${id}: ${problem}`))
       warnings.push(...scan.warnings.map((warning) => `${id}: ${warning}`))
       facts.push(`Source size: ${(scan.totalBytes / 1024).toFixed(0)} KB.`)
+      problems.push(...screenshotProblems(folder, after?.odyn?.screenshots).map((problem) => `${id}: ${problem}`))
     }
     for (const [name, range] of manifest.newDependencies) {
       const found = checkPackage(name, range)
