@@ -5,8 +5,9 @@
         "id": "agent-inboxes",
         "title": "Agent inboxes",
         "description": "Give agents throwaway email addresses for sign-ups and verification codes. Needs you signed in to Odyn.",
+        "icon": "inbox",
         "author": "Odyn",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "apiVersion": 4,
         "permissions": [
           "agent:tools"
@@ -14,19 +15,30 @@
         "commands": [],
         "agent": {
           "summary": "make receive-only email addresses and read the emails that arrive, for sign-ups and verification codes"
-        }
+        },
+        "screenshots": [
+          "screenshots/1.webp",
+          "screenshots/2.webp",
+          "screenshots/3.webp"
+        ]
       },
-      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/agent-inboxes-v1.0.0/agent-inboxes-v1.0.0.tar.gz",
-      "size": 435,
-      "sha256": "7bfcfdfd6875433816226c28ce38c0ab8d6574a088bb5bdd2ec75590de156d94"
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/agent-inboxes-v1.0.1/agent-inboxes-v1.0.1.tar.gz",
+      "size": 496,
+      "sha256": "217ae5c2168c8580dfe903c35da1b854eaa0f86ad97a1d13309ce724f8d57da8",
+      "screenshots": [
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/agent-inboxes/screenshots/1.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/agent-inboxes/screenshots/2.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/agent-inboxes/screenshots/3.webp"
+      ]
     },
     {
       "manifest": {
         "id": "computer-use",
         "title": "Computer use",
         "description": "Let agents see and control your Mac's apps when you ask them to with /odyn-computer.",
+        "icon": "cursor",
         "author": "Odyn",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "apiVersion": 4,
         "platforms": [
           "darwin"
@@ -40,19 +52,30 @@
           "skillFolder": "skill",
           "summary": "see and control the user's Mac apps with the peekaboo command, only when the user types /odyn-computer",
           "accessLabel": "control your Mac"
-        }
+        },
+        "screenshots": [
+          "screenshots/1.webp",
+          "screenshots/2.webp",
+          "screenshots/3.webp"
+        ]
       },
-      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/computer-use-v1.0.0/computer-use-v1.0.0.tar.gz",
-      "size": 3900,
-      "sha256": "330831e18bc937329bb14d81c6061f36e4eb6a0fb7c91c4541128cacfd9dc2e0"
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/computer-use-v1.0.1/computer-use-v1.0.1.tar.gz",
+      "size": 3965,
+      "sha256": "993036bc8f438f457a3c9d1e4a95ec678f4a03815a3ba69d05bf69cc2b709f0f",
+      "screenshots": [
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/computer-use/screenshots/1.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/computer-use/screenshots/2.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/computer-use/screenshots/3.webp"
+      ]
     },
     {
       "manifest": {
         "id": "design-skills",
         "title": "Design and dev skills",
         "description": "Gives agents Odyn's design skills (flow, wireframe, hi-fi, review) and dev skills (scope, plan, build).",
+        "icon": "palette",
         "author": "Odyn",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "apiVersion": 4,
         "permissions": [
           "agent:tools"
@@ -67,19 +90,30 @@
         ],
         "agent": {
           "summary": "design a flow, wireframe or hi-fi screen, review work, and scope, plan and build features"
-        }
+        },
+        "screenshots": [
+          "screenshots/1.webp",
+          "screenshots/2.webp",
+          "screenshots/3.webp"
+        ]
       },
-      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/design-skills-v1.0.0/design-skills-v1.0.0.tar.gz",
-      "size": 522,
-      "sha256": "d01dc825a1671361466b80e859493db82bac9a623dd91e9125b28550f5ef45eb"
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/design-skills-v1.0.1/design-skills-v1.0.1.tar.gz",
+      "size": 580,
+      "sha256": "5b8ff7bb263b913ee6d610fa7529d3cd21f14f72984ccc342f9fc1436a06f99f",
+      "screenshots": [
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/design-skills/screenshots/1.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/design-skills/screenshots/2.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/design-skills/screenshots/3.webp"
+      ]
     },
     {
       "manifest": {
         "id": "fast-browser",
         "title": "Fast browser goals",
         "description": "Let agents hand a whole browser goal (\"sign in and open settings\") to Jev in one step, instead of clicking through it. Needs a Jev API key.",
+        "icon": "globe",
         "author": "Odyn",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "apiVersion": 4,
         "permissions": [
           "agent:tools"
@@ -100,34 +134,54 @@
         ],
         "agent": {
           "summary": "hand a whole browser goal to Jev in one step, in chats where the user asked for the browser"
-        }
+        },
+        "screenshots": [
+          "screenshots/1.webp",
+          "screenshots/2.webp"
+        ]
       },
-      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/fast-browser-v1.0.0/fast-browser-v1.0.0.tar.gz",
-      "size": 592,
-      "sha256": "e1777e6152d391f4e5dd008442523290d86bd1abf7b4bbf3ee8a3e04caed6269"
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/fast-browser-v1.0.1/fast-browser-v1.0.1.tar.gz",
+      "size": 648,
+      "sha256": "330c9a7c5ba37981b4f8b2c98465a9a2482fdb98e2a1c49704595322768aaf92",
+      "screenshots": [
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/fast-browser/screenshots/1.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/fast-browser/screenshots/2.webp"
+      ]
     },
     {
       "manifest": {
         "id": "message-outline",
         "title": "Message outline",
         "description": "Show a slim column of ticks beside a chat, one per message you sent. Hover a tick to see the message; click it to jump there.",
+        "icon": "list",
         "author": "Odyn",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "apiVersion": 4,
         "permissions": [],
-        "commands": []
+        "commands": [],
+        "screenshots": [
+          "screenshots/1.webp",
+          "screenshots/2.webp",
+          "screenshots/3.webp"
+        ]
       },
-      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/message-outline-v1.0.0/message-outline-v1.0.0.tar.gz",
-      "size": 387,
-      "sha256": "d79fb0a0f4ff00a252a16c41595985714f53945b45d67f930a7fbb79646b4cb6"
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/message-outline-v1.0.1/message-outline-v1.0.1.tar.gz",
+      "size": 448,
+      "sha256": "89d714c73b59cc76cfa3a72b0a1c044c36c026c204ad6893e1a07d5246a68d67",
+      "screenshots": [
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/message-outline/screenshots/1.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/message-outline/screenshots/2.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/message-outline/screenshots/3.webp"
+      ]
     },
     {
       "manifest": {
         "id": "phones",
         "title": "Phones",
         "description": "Let agents run iPhone simulators and Android emulators that you watch live in the sidebar.",
+        "icon": "phone",
         "author": "Odyn",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "apiVersion": 3,
         "platforms": [
           "darwin"
@@ -277,19 +331,30 @@
               "program": "emulator"
             }
           ]
-        }
+        },
+        "screenshots": [
+          "screenshots/1.webp",
+          "screenshots/2.webp",
+          "screenshots/3.webp"
+        ]
       },
-      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/phones-v1.0.0/phones-v1.0.0.tar.gz",
-      "size": 320746,
-      "sha256": "335225f116049d491d866e78fcdc16ab941f6f709ac21d4ce3ee16d2049daff5"
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/phones-v1.0.1/phones-v1.0.1.tar.gz",
+      "size": 317778,
+      "sha256": "fe65f4a20d9a95363d81bf2225a429ff69b6815f1eb045e5b0cf3f24e7704aaa",
+      "screenshots": [
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/phones/screenshots/1.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/phones/screenshots/2.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/phones/screenshots/3.webp"
+      ]
     },
     {
       "manifest": {
         "id": "scratchpad",
         "title": "Scratchpad",
         "description": "Sketch an idea above the message box and attach it to your message.",
+        "icon": "pencil",
         "author": "Odyn",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "apiVersion": 2,
         "permissions": [
           "composer:attach",
@@ -305,11 +370,21 @@
             "icon": "pencil",
             "height": 260
           }
+        ],
+        "screenshots": [
+          "screenshots/1.webp",
+          "screenshots/2.webp",
+          "screenshots/3.webp"
         ]
       },
-      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/scratchpad-v1.0.0/scratchpad-v1.0.0.tar.gz",
-      "size": 3317360,
-      "sha256": "5fff60a5b0b0fb5cd0ba1aef171a96fd422bc450884e95fbf6b787ae3903114b"
+      "url": "https://github.com/New-Genre/odyn-extensions/releases/download/scratchpad-v1.0.1/scratchpad-v1.0.1.tar.gz",
+      "size": 3326282,
+      "sha256": "66dca32c44d2f44a28250e3cda6af99951d321298fe18c15d9382ad2cd71025c",
+      "screenshots": [
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/scratchpad/screenshots/1.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/scratchpad/screenshots/2.webp",
+        "https://raw.githubusercontent.com/New-Genre/odyn-extensions/b566d007f87000f574357f1349e2c6b8f40d64d2/extensions/scratchpad/screenshots/3.webp"
+      ]
     }
   ]
 }
