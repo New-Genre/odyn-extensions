@@ -1,13 +1,14 @@
 {
   "name": "odyn-extension-fast-browser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "fast-browser",
     "title": "Fast browser goals",
     "description": "Let agents hand a whole browser goal (\"sign in and open settings\") to Jev in one step, instead of clicking through it. Needs a Jev API key.",
+    "icon": "globe",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 4,
     "permissions": [
       "agent:tools"

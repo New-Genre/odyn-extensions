@@ -1,13 +1,14 @@
 {
   "name": "odyn-extension-design-skills",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "design-skills",
     "title": "Design and dev skills",
     "description": "Gives agents Odyn's design skills (flow, wireframe, hi-fi, review) and dev skills (scope, plan, build).",
+    "icon": "palette",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 4,
     "permissions": [
       "agent:tools"

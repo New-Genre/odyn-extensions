@@ -1,13 +1,14 @@
 {
   "name": "odyn-extension-computer-use",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "computer-use",
     "title": "Computer use",
     "description": "Let agents see and control your Mac's apps when you ask them to with /odyn-computer.",
+    "icon": "cursor",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 4,
     "platforms": [
       "darwin"

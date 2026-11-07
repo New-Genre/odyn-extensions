@@ -1,13 +1,14 @@
 {
   "name": "odyn-extension-scratchpad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "odyn": {
     "id": "scratchpad",
     "title": "Scratchpad",
     "description": "Sketch an idea above the message box and attach it to your message.",
+    "icon": "pencil",
     "author": "Odyn",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "apiVersion": 2,
     "permissions": [
       "composer:attach",
