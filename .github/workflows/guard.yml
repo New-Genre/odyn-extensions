@@ -33,6 +33,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           path: pr
           persist-credentials: false
+          # Authors send extensions from their own copy of this repo, which
+          # GitHub won't fetch here without this. Safe only because these
+          # files are read, never installed or run — keep it that way.
+          allow-unsafe-pr-checkout: true
       - uses: oven-sh/setup-bun@v2
       - name: Install main's tools
         working-directory: base
