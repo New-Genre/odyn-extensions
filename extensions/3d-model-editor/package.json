@@ -1,0 +1,50 @@
+{
+  "name": "odyn-extension-3d-model-editor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "odyn-extension dev",
+    "build": "odyn-extension build",
+    "check": "odyn-extension check",
+    "publish": "odyn-extension publish"
+  },
+  "dependencies": {
+    "@odyn-app/api": "^0.8.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0"
+  },
+  "odyn": {
+    "id": "3d-model-editor",
+    "title": "3d model editor",
+    "description": "Import a 3D model and move, rotate, scale and recolour it, Blender-style.",
+    "author": "Jack Smethurst",
+    "apiVersion": 10,
+    "permissions": [
+      "ui:page",
+      "ui:sidebar"
+    ],
+    "sidebarItem": {
+      "title": "3D editor",
+      "icon": "pencil"
+    },
+    "surfaces": [
+      {
+        "id": "editor",
+        "title": "3D model editor",
+        "placement": "page",
+        "entry": "dist/panel/index.html"
+      }
+    ],
+    "commands": [],
+    "owners": [
+      "jacksmethurst"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0"
+  }
+}
