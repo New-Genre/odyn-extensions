@@ -31,6 +31,9 @@ jobs:
           ssh-key: ${{ secrets.RELEASE_DEPLOY_KEY }}
       - uses: oven-sh/setup-bun@v2
       - run: bun install --ignore-scripts
+      # The same newest building kit the pull request's check used. The
+      # lockfile it updates is saved back to main below.
+      - run: bun update @odyn-app/api --ignore-scripts
       - run: node scripts/release.mjs --publish
         env:
           GH_TOKEN: ${{ github.token }}
