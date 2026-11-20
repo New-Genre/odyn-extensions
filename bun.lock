@@ -5,7 +5,7 @@
     "": {
       "name": "odyn-extensions",
       "devDependencies": {
-        "@odyn-app/api": "^0.3.0",
+        "@odyn-app/api": "latest",
         "@tailwindcss/postcss": "^4.3.3",
         "@types/bun": "latest",
         "@types/react": "^19.2.17",
@@ -115,7 +115,7 @@
 
     "@mermaid-js/parser": ["@mermaid-js/parser@0.6.3", "", { "dependencies": { "langium": "3.3.1" } }, "sha512-lnjOhe7zyHjc+If7yT4zoedx2vo4sHaTmtkl1+or8BRTnCtDmcTpAjpzDSfCZrshM5bCoz0GyidzadJAH1xobA=="],
 
-    "@odyn-app/api": ["@odyn-app/api@0.3.0", "", { "dependencies": { "@tailwindcss/postcss": "^4.3.3", "@vitejs/plugin-react": "^6.0.4", "class-variance-authority": "^0.7.1", "clsx": "^2.1.1", "tailwind-merge": "^3.6.0", "tailwindcss": "^4.3.3", "vite": "^8.1.5" }, "peerDependencies": { "react": ">=19" }, "bin": { "odyn-extension": "cli/odyn-extension.mjs" } }, "sha512-R2sXKsx+fzkOV+YfLM+YBBtBrYuMDGIAeMyHzBwwh4/2L4ibgVgO9Iyv1vPtdx3Gifgy9e/VtI6Vf7HmJW78IQ=="],
+    "@odyn-app/api": ["@odyn-app/api@0.8.0", "", { "dependencies": { "@tailwindcss/postcss": "^4.3.3", "@vitejs/plugin-react": "^6.0.4", "class-variance-authority": "^0.7.1", "clsx": "^2.1.1", "tailwind-merge": "^3.6.0", "tailwindcss": "^4.3.3", "vite": "^8.1.5" }, "peerDependencies": { "react": ">=19" }, "bin": { "odyn-extension": "cli/odyn-extension.mjs" } }, "sha512-rZSMX/LT1l+x09lyiCzSHOYs5RlHo6rf74K35besgl7T+sdpr85zaIZVVi5ZiMGavF0KIvPmsHP5jebOJI4IFQ=="],
 
     "@oxc-project/types": ["@oxc-project/types@0.156.0", "", {}, "sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw=="],
 

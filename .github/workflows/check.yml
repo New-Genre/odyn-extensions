@@ -19,6 +19,9 @@ jobs:
       # Not frozen: a new extension adds itself to the lockfile. Packages may
       # not run scripts while installing.
       - run: bun install --ignore-scripts
+      # Always build with the newest building kit, whatever the lockfile last
+      # saved, so an extension using a new Odyn feature is never refused here.
+      - run: bun update @odyn-app/api --ignore-scripts
       - run: bun run typecheck
       - run: bun run test
       - run: bun run build
